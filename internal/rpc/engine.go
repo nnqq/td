@@ -9,8 +9,8 @@ import (
 	"go.uber.org/zap"
 	"golang.org/x/xerrors"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/clock"
+	"github.com/nnqq/td/bin"
+	"github.com/nnqq/td/clock"
 )
 
 // Engine handles RPC requests.

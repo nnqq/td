@@ -9,9 +9,9 @@ import (
 	"go.uber.org/zap"
 	"golang.org/x/xerrors"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/tg"
-	"github.com/gotd/td/tgerr"
+	"github.com/nnqq/td/bin"
+	"github.com/nnqq/td/tg"
+	"github.com/nnqq/td/tgerr"
 )
 
 // API returns *tg.Client for calling raw MTProto methods.
@@ -84,13 +84,17 @@ func (c *Client) invokeConn(ctx context.Context, input bin.Encoder, output bin.D
 }
 
 func isNetworkError(err error) bool {
+	if err == nil {
+		return false
+	}
+
 	if xerrors.Is(err, syscall.EPIPE) {
 		return true
 	}
 
-	if err, ok := err.(net.Error); ok && err.Timeout() {
+	if e, ok := err.(net.Error); ok && e.Timeout() {
 		return true
 	}
 
-	return false
+	return strings.Contains(err.Error(), "engine was closed")
 }
